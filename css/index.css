@@ -60,3 +60,28 @@
   .hero{min-height:0;padding-bottom:48px}
   .property-search{grid-template-columns:minmax(0,1fr);max-height:none}
 }
+
+/* Desktop hero search: contained within the hero at every non-mobile width. */
+@media(min-width:769px){
+  .hero{min-height:clamp(720px,100svh,960px);padding-bottom:190px;overflow:clip}
+  .property-search{left:50%;right:auto;bottom:72px;transform:translateX(-50%);width:calc(100% - 96px);max-width:1248px;min-width:0;margin-inline:auto;box-sizing:border-box;grid-template-columns:140px minmax(170px,1.15fr) minmax(170px,1.15fr) minmax(150px,.95fr) minmax(120px,.75fr) 64px}
+  .js.reveal-ready .property-search.reveal:not(.is-visible){transform:translate(-50%,26px)}
+  .property-search.reveal,.property-search.reveal.is-visible{transform:translateX(-50%)}
+  .property-search>*,.property-search label,.property-search select{min-width:0}
+  .property-search select{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .search-submit{min-width:64px}
+  .hero-stats{left:50%;bottom:24px;transform:translateX(-50%);justify-content:flex-start;gap:55px}
+  .scroll-cue{right:max(48px,calc((100% - 1248px)/2));bottom:20px}
+}
+@media(min-width:769px) and (max-width:1279px){
+  .hero{min-height:clamp(720px,100svh,900px);padding-bottom:220px}
+  .property-search{bottom:72px;width:calc(100% - 48px);max-width:1080px;grid-template-columns:120px minmax(0,1fr) minmax(0,1fr);grid-auto-rows:minmax(64px,auto)}
+  .property-search label{padding-inline:16px}
+  .search-mode{grid-column:auto}
+  .search-submit{width:100%;min-width:0}
+  .hero-stats{gap:32px}
+  .scroll-cue{display:none}
+}
+@media(min-width:769px) and (prefers-reduced-motion:reduce){
+  .property-search.reveal,.property-search.reveal.is-visible,.js.reveal-ready .property-search.reveal:not(.is-visible){transform:translateX(-50%)!important}
+}
