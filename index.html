@@ -1,0 +1,120 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TABANJI ESTATES â€” Luxury Real Estate | Exclusive Properties Worldwide. Privately curated homes in the world's most desirable destinations.">
+  <meta property="og:title" content="TABANJI ESTATES | Luxury Real Estate">
+  <meta property="og:description" content="Luxury Real Estate | Exclusive Properties Worldwide. Exceptional homes, prime destinations and a distinctly private approach.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/index.css">
+  <title>TABANJI ESTATES | Luxury Real Estate | Exclusive Properties Worldwide</title>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header" id="site-header">
+    <div class="header-inner container-wide">
+      <a class="brand" href="#" aria-label="TABANJI ESTATES home"><span>TABANJI</span><small>ESTATES</small></a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="properties.html?operation=buy" data-i18n="buy">Buy</a><a href="properties.html?operation=rent" data-i18n="rent">Rent</a><a href="properties.html?newDevelopment=true" data-i18n="developments">New Developments</a><a href="properties.html?exclusive=true" data-i18n="exclusive">Exclusive</a><a href="#destinations" data-i18n="locations">Locations</a><a href="#services" data-i18n="about">About</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button search-trigger" type="button" aria-label="Open property search"><i data-lucide="search"></i></button>
+        <button class="icon-button header-favorite" type="button" aria-label="View favorites"><i data-lucide="heart"></i><span class="favorite-count" aria-live="polite">0</span></button>
+        <div class="language-switch" aria-label="Language"><button type="button" data-language="en">EN</button><button type="button" data-language="ar">AR</button></div>
+        <a class="button button-outline list-property" href="#contact">List Your Property</a>
+        <button class="menu-toggle icon-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav aria-label="Mobile navigation"><a href="properties.html?operation=buy" data-i18n="buy">Buy</a><a href="properties.html?operation=rent" data-i18n="rent">Rent</a><a href="properties.html?newDevelopment=true" data-i18n="developments">New Developments</a><a href="properties.html?exclusive=true" data-i18n="exclusive">Exclusive</a><a href="#destinations" data-i18n="locations">Locations</a><a href="#services" data-i18n="about">About</a></nav>
+    <div class="mobile-menu-footer"><a href="#contact">List Your Property</a><span>Private advisory worldwide</span></div>
+  </div>
+
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-overlay"></div>
+      <div class="hero-content container-wide reveal">
+        <p class="eyebrow" data-i18n="heroEyebrow">Lebanonâ€™s Private Real Estate Collection</p>
+        <h1 id="hero-title" data-i18n="heroTitle">Find a home that defines your lifestyle.</h1>
+        <p class="hero-copy" data-i18n="heroCopy">Exceptional residences, discreetly sourced across Lebanonâ€™s most desirable addresses.</p>
+        <div class="hero-actions"><a class="button button-gold" href="properties.html" data-i18n="explore">Explore Properties</a><a class="text-link" href="#contact"><span data-i18n="privateViewing">Request Private Viewing</span> <i data-lucide="arrow-up-right"></i></a></div>
+      </div>
+
+      <form class="property-search container-wide reveal" id="property-search">
+        <div class="search-mode" role="group" aria-label="Listing type"><button class="active" type="button" data-mode="Buy">Buy</button><button type="button" data-mode="Rent">Rent</button></div>
+        <label><span data-i18n="location">Location</span><select name="location"><option value="">All Lebanon</option><option>Beirut</option><option>Achrafieh</option><option>Raouche</option><option>Verdun</option><option>Dbayeh</option><option>Broummana</option><option>Jounieh</option><option>Faraya</option><option>Faqra</option><option>Batroun</option></select></label>
+        <label><span data-i18n="propertyType">Property Type</span><select name="type"><option value="">All properties</option><option>Apartment</option><option>Penthouse</option><option>Villa</option><option>Duplex</option><option>Chalet</option><option>Land</option><option>Office</option></select></label>
+        <div class="mobile-filters" id="mobile-filters">
+          <label><span>Price Range</span><select name="price"><option value="">Any price</option><option>$1M â€” $3M</option><option>$3M â€” $10M</option><option>$10M+</option></select></label>
+          <label><span>Bedrooms</span><select name="bedrooms"><option value="">Any</option><option>2+</option><option>3+</option><option>4+</option><option>5+</option></select></label>
+        </div>
+        <button class="more-filters" type="button" aria-expanded="false" aria-controls="mobile-filters">More Filters <i data-lucide="sliders-horizontal"></i></button>
+        <button class="search-submit" type="submit"><i data-lucide="search"></i><span>Search</span></button>
+      </form>
+
+      <div class="hero-stats container-wide"><p><strong>250+</strong><span>Exclusive Properties</span></p><p><strong>12</strong><span>Prime Destinations</span></p><p><strong>24/7</strong><span>Private Concierge</span></p></div>
+      <a class="scroll-cue" href="#properties" aria-label="Scroll to exclusive properties"><span>Scroll</span><i data-lucide="arrow-down"></i></a>
+    </section>
+
+    <section class="section properties-section" id="properties">
+      <div class="container-wide">
+        <div class="section-heading reveal"><div><p class="eyebrow">Our private selection</p><h2>Exclusive Properties</h2></div><p>A curated selection of exceptional homes in the worldâ€™s most desirable locations.</p></div>
+        <div class="property-grid" id="property-grid"></div>
+        <div class="section-footer reveal"><a class="text-link" href="#properties">View the complete collection <i data-lucide="arrow-right"></i></a></div>
+      </div>
+    </section>
+
+    <section class="section collections-section" id="collections">
+      <div class="container-wide"><div class="section-heading reveal"><div><p class="eyebrow">Curated for distinction</p><h2>The Signature Collection</h2></div><p>Rare properties selected for their architecture, provenance and exceptional sense of place.</p></div>
+        <div class="collection-grid">
+          <article class="collection-card collection-large collection-waterfront reveal"><div><p>01 / Coastal living</p><h3>Waterfront Villas</h3><span>Private horizons, uninterrupted.</span><a href="#properties">Explore <i data-lucide="arrow-up-right"></i></a></div></article>
+          <article class="collection-card collection-penthouses reveal"><div><p>02 / Above the city</p><h3>Private Penthouses</h3><span>Remarkable views from a higher perspective.</span><a href="#properties">Explore <i data-lucide="arrow-up-right"></i></a></div></article>
+          <article class="collection-card collection-branded reveal"><div><p>03 / Design-led</p><h3>Branded Residences</h3><span>Signature service meets iconic design.</span><a href="#properties">Explore <i data-lucide="arrow-up-right"></i></a></div></article>
+          <article class="collection-card collection-wide collection-offmarket reveal"><div><p>04 / Quietly exceptional</p><h3>Off-Market Collection</h3><span>Extraordinary homes, presented with absolute discretion.</span><a href="#contact">Request access <i data-lucide="arrow-up-right"></i></a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section destinations-section" id="destinations"><div class="container-wide"><div class="section-heading reveal"><div><p class="eyebrow">Global perspective</p><h2>Explore Prime Destinations</h2></div><p>Local expertise in the places that define international luxury.</p></div><div class="destination-track">
+      <a class="destination-card destination-dubai reveal" href="destination.html?slug=downtown-beirut"><span>12 properties</span><h3>Downtown Beirut</h3><small>Explore location <i data-lucide="arrow-right"></i></small></a>
+      <a class="destination-card destination-beirut reveal" href="destination.html?slug=achrafieh"><span>18 properties</span><h3>Achrafieh</h3><small>Explore location <i data-lucide="arrow-right"></i></small></a>
+      <a class="destination-card destination-monaco reveal" href="destination.html?slug=jounieh"><span>15 properties</span><h3>Jounieh</h3><small>Explore location <i data-lucide="arrow-right"></i></small></a>
+      <a class="destination-card destination-london reveal" href="destination.html?slug=faqra"><span>5 properties</span><h3>Faqra</h3><small>Explore location <i data-lucide="arrow-right"></i></small></a>
+      <a class="destination-card destination-miami reveal" href="destination.html?slug=batroun"><span>9 properties</span><h3>Batroun</h3><small>Explore location <i data-lucide="arrow-right"></i></small></a>
+    </div></div></section>
+
+    <section class="section services-section" id="services"><div class="container-wide"><div class="section-heading reveal"><div><p class="eyebrow">Beyond the transaction</p><h2>A Complete Private<br>Real Estate Service</h2></div><p>Considered guidance from the first conversation to long after completion.</p></div><div class="services-list">
+      <article class="service reveal"><span>01</span><h3>Buying Advisory</h3><p>Intelligent search, private access and clear counsel at every stage of acquisition.</p><a href="#contact">Discover More <i data-lucide="arrow-up-right"></i></a></article>
+      <article class="service reveal"><span>02</span><h3>Selling Representation</h3><p>Discreet positioning and global reach for homes of distinction.</p><a href="#contact">Discover More <i data-lucide="arrow-up-right"></i></a></article>
+      <article class="service reveal"><span>03</span><h3>Investment Advisory</h3><p>Market intelligence and opportunity analysis shaped around your ambitions.</p><a href="#contact">Discover More <i data-lucide="arrow-up-right"></i></a></article>
+      <article class="service reveal"><span>04</span><h3>Private Concierge</h3><p>A single trusted point of contact for every detail of property ownership.</p><a href="#contact">Discover More <i data-lucide="arrow-up-right"></i></a></article>
+    </div></div></section>
+
+    <section class="concierge reveal" id="contact"><div class="concierge-content"><p class="eyebrow">Tabanji Private Office</p><h2>Your next property deserves<br><em>a private approach.</em></h2><p>Speak with a dedicated advisor and receive a personally curated selection of properties.</p><div><a class="button button-gold" href="tel:+97145550198">Schedule a Private Call</a><a class="button button-glass" href="https://wa.me/97145550198" target="_blank" rel="noopener">Contact via WhatsApp <i data-lucide="message-circle"></i></a></div></div></section>
+
+    <section class="section journal-section"><div class="container-wide"><div class="section-heading reveal"><div><p class="eyebrow">Ideas & intelligence</p><h2>The Tabanji Journal</h2></div><a class="text-link" href="#journal">View all stories <i data-lucide="arrow-right"></i></a></div><div class="journal-grid" id="journal">
+      <article class="journal-card reveal"><a class="journal-image" href="#journal"><img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1200&q=85" alt="Dubai waterfront skyline" loading="lazy"></a><p>Destinations <span>12 June 2026</span></p><h3>The Most Exclusive Waterfront Communities in Dubai</h3><p>Where inspired architecture meets a rare relationship with the water.</p><a href="#journal">Read Article <i data-lucide="arrow-right"></i></a></article>
+      <article class="journal-card reveal"><a class="journal-image" href="#journal"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85" alt="Refined luxury residence interior" loading="lazy"></a><p>Investment <span>28 May 2026</span></p><h3>Why Branded Residences Continue to Attract Global Investors</h3><p>The enduring appeal of service, scarcity and a globally recognized name.</p><a href="#journal">Read Article <i data-lucide="arrow-right"></i></a></article>
+      <article class="journal-card reveal"><a class="journal-image" href="#journal"><img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85" alt="Mediterranean coastline and city" loading="lazy"></a><p>Guides <span>09 May 2026</span></p><h3>A Private Buyerâ€™s Guide to Luxury Property in Beirut</h3><p>A considered introduction to the cityâ€™s most compelling addresses.</p><a href="#journal">Read Article <i data-lucide="arrow-right"></i></a></article>
+    </div></div></section>
+  </main>
+
+  <footer class="site-footer"><div class="container-wide"><div class="footer-top"><div class="footer-brand"><a class="brand" href="#" aria-label="TABANJI ESTATES home"><span>TABANJI</span><small>ESTATES</small></a><p>Luxury Real Estate | Exclusive Properties Across Lebanon. A private advisory representing exceptional homes and discerning clients.</p></div><div><h3>Properties</h3><a href="properties.html?operation=buy">Buy</a><a href="properties.html?operation=rent">Rent</a><a href="properties.html?newDevelopment=true">New Developments</a><a href="properties.html?exclusive=true">Exclusive Collection</a></div><div><h3>Company</h3><a href="#services">About</a><a href="#services">Our Advisors</a><a href="#journal">Journal</a><a href="#contact">Contact</a></div><div><h3>Locations</h3><a href="properties.html?location=Beirut">Beirut</a><a href="properties.html?location=Achrafieh">Achrafieh</a><a href="properties.html?location=Jounieh">Jounieh</a><a href="properties.html?location=Faqra">Faqra</a><a href="properties.html?location=Batroun">Batroun</a></div><address><h3>Private Office</h3><a href="tel:+9611555400">+961 1 555 400</a><a href="mailto:private@tabanjiestates.com">private@tabanjiestates.com</a><a href="https://wa.me/9611555400">WhatsApp</a><p>Beirut, Lebanon</p></address></div>
+    <div class="newsletter"><div><p class="eyebrow">Private correspondence</p><h2>Join the Tabanji list.</h2></div><form id="newsletter-form"><label class="sr-only" for="newsletter-email">Email address</label><input id="newsletter-email" type="email" placeholder="Your email address" required><button type="submit" aria-label="Subscribe to the TABANJI ESTATES newsletter"><i data-lucide="arrow-right"></i></button></form></div>
+    <div class="footer-bottom"><p>Â© 2026 TABANJI ESTATES</p><div><a href="#">Privacy Policy</a><a href="#">Terms & Conditions</a><button type="button">Cookie Settings</button></div><div class="socials"><a href="#" aria-label="Instagram">IG</a><a href="#" aria-label="LinkedIn">LI</a><a href="#" aria-label="Facebook">FB</a></div></div></div></footer>
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="data/properties.js" defer></script>
+  <script src="data/site-config.js" defer></script><script src="js/i18n.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/index.js" defer></script>
+</body>
+</html>
