@@ -1,143 +1,17 @@
 (() => {
   'use strict';
-
-  const properties = Array.isArray(window.TABANJI_PROPERTIES) ? window.TABANJI_PROPERTIES : [];
-  const grid = document.getElementById('property-grid');
-  const favoriteCount = document.querySelector('.favorite-count');
-  const storageKey = 'tabanji_estates_favorites';
-  const legacyStorageKey = ['vel', 'mont_favorites'].join('');
-
-  const migrateFavorites = () => {
-    try {
-      if (localStorage.getItem(storageKey) !== null) return;
-      const legacyValue = localStorage.getItem(legacyStorageKey);
-      if (legacyValue === null) return;
-      const parsed = JSON.parse(legacyValue);
-      if (!Array.isArray(parsed)) return;
-      const safeFavorites = parsed.map(Number).filter(Number.isFinite);
-      localStorage.setItem(storageKey, JSON.stringify(safeFavorites));
-      localStorage.removeItem(legacyStorageKey);
-    } catch (_) {
-      // Ignore unavailable storage and malformed legacy data without affecting the page.
-    }
-  };
-
-  migrateFavorites();
-
-  const escapeHTML = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
-
-  const getFavorites = () => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
-      return Array.isArray(saved) ? saved.map(Number).filter(Number.isFinite) : [];
-    } catch (error) {
-      // Storage may be unavailable or contain invalid data; fail safely.
-      return [];
-    }
-  };
-
-  const saveFavorites = (favorites) => {
-    try { localStorage.setItem(storageKey, JSON.stringify(favorites)); }
-    catch (error) { /* Storage can be unavailable in private browsing contexts. */ }
-  };
-
-  const formatPrice = (property) => `$${Number(property.price).toLocaleString('en-US')}${property.pricePeriod ? ` / ${property.pricePeriod}` : ''}`;
-
-  const propertyCard = (property, favorites) => {
-    const active = favorites.includes(property.id);
-    const arabic = window.TabanjiI18n?.language === 'ar';
-    const displayTitle = arabic ? property.titleAr : property.title;
-    const displayLocation = arabic ? property.locationAr : property.location;
-    return `
-      <article class="property-card reveal" data-property-id="${property.id}">
-        <a class="property-media" href="property.html?id=${property.id}" aria-label="View ${escapeHTML(displayTitle)}">
-          <img src="${escapeHTML(property.mainImage)}" alt="${escapeHTML(displayTitle)}" loading="lazy">
-          <span class="badge">${escapeHTML(property.exclusive ? 'Exclusive' : property.featured ? 'Featured' : property.status)}</span>
-          <span class="button card-view">View Property</span>
-        </a>
-        <button class="favorite-button${active ? ' active' : ''}" type="button" aria-label="${active ? 'Remove from' : 'Add to'} favorites" aria-pressed="${active}"><i data-lucide="heart"></i></button>
-        <div class="property-info">
-          <h3>${escapeHTML(displayTitle)}</h3>
-          <p class="property-location">${escapeHTML(displayLocation)}</p>
-          <p class="property-price">${formatPrice(property)}</p>
-          <div class="property-meta">${property.bedrooms ? `<span><i data-lucide="bed-double"></i>${property.bedrooms} Beds</span>` : ''}${property.bathrooms ? `<span><i data-lucide="bath"></i>${property.bathrooms} Baths</span>` : ''}<span><i data-lucide="maximize"></i>${escapeHTML(property.area)} m²</span></div>
-        </div>
-      </article>`;
-  };
-
-  const updateFavoriteUI = () => {
-    const favorites = getFavorites();
-    if (favoriteCount) favoriteCount.textContent = String(favorites.length);
-    document.querySelectorAll('.property-card').forEach((card) => {
-      const button = card.querySelector('.favorite-button');
-      const active = favorites.includes(Number(card.dataset.propertyId));
-      button?.classList.toggle('active', active);
-      button?.setAttribute('aria-pressed', String(active));
-      button?.setAttribute('aria-label', `${active ? 'Remove from' : 'Add to'} favorites`);
-    });
-  };
-
-  if (grid) {
-    grid.innerHTML = properties.filter((property) => property.featured || property.exclusive).slice(0, 6).map((property) => propertyCard(property, getFavorites())).join('');
-    grid.addEventListener('click', (event) => {
-      const button = event.target.closest('.favorite-button');
-      if (!button) return;
-      const card = button.closest('.property-card');
-      const id = Number(card?.dataset.propertyId);
-      const favorites = getFavorites();
-      const isSaved = favorites.includes(id);
-      const updated = isSaved ? favorites.filter((item) => item !== id) : [...favorites, id];
-      saveFavorites(updated);
-      updateFavoriteUI();
-      window.Tabanji?.showToast(isSaved ? 'Property removed from favorites.' : 'Property added to favorites.');
-    });
-  }
-  updateFavoriteUI();
-
-  const searchForm = document.getElementById('property-search');
-  let searchMode = 'Buy';
-  searchForm?.querySelectorAll('[data-mode]').forEach((button) => {
-    button.addEventListener('click', () => {
-      searchMode = button.dataset.mode;
-      searchForm.querySelectorAll('[data-mode]').forEach((item) => item.classList.toggle('active', item === button));
-    });
-  });
-
-  searchForm?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const filters = Object.fromEntries(new FormData(searchForm).entries());
-    const query = new URLSearchParams({ operation: searchMode.toLowerCase() });
-    Object.entries(filters).forEach(([key, value]) => { if (value) query.set(key, value); });
-    window.location.href = `properties.html?${query}`;
-  });
-
-  const moreFilters = document.querySelector('.more-filters');
-  const mobileFilters = document.getElementById('mobile-filters');
-  moreFilters?.addEventListener('click', () => {
-    const open = mobileFilters.classList.toggle('open');
-    moreFilters.setAttribute('aria-expanded', String(open));
-    moreFilters.firstChild.textContent = open ? 'Fewer Filters ' : 'More Filters ';
-  });
-
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const revealItems = document.querySelectorAll('.reveal');
-  if (reducedMotion || !('IntersectionObserver' in window)) {
-    revealItems.forEach((item) => item.classList.add('is-visible'));
-  } else {
-    const observer = new IntersectionObserver((entries, instance) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); instance.unobserve(entry.target); }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -35px' });
-    revealItems.forEach((item) => observer.observe(item));
-  }
-
-  window.addEventListener('load', () => { if (window.lucide) window.lucide.createIcons(); });
-  document.addEventListener('tabanji:languagechange', () => {
-    if (!grid) return;
-    grid.innerHTML = properties.filter((property) => property.featured || property.exclusive).slice(0, 6).map((property) => propertyCard(property, getFavorites())).join('');
-    updateFavoriteUI();
-    if (window.lucide) window.lucide.createIcons();
-  });
-  window.addEventListener('storage', (event) => { if (event.key === storageKey) updateFavoriteUI(); });
+  const storageKey='tabanji_estates_favorites',legacyStorageKey=['vel','mont_favorites'].join('');
+  const escapeHTML=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const getFavorites=()=>{try{const value=JSON.parse(localStorage.getItem(storageKey)||'[]');return Array.isArray(value)?value.map(Number).filter(Number.isFinite):[]}catch(_){return[]}};
+  const saveFavorites=value=>{try{localStorage.setItem(storageKey,JSON.stringify(value))}catch(_){}};
+  const migrateFavorites=()=>{try{if(localStorage.getItem(storageKey)!==null)return;const value=localStorage.getItem(legacyStorageKey);if(value===null)return;const parsed=JSON.parse(value);if(!Array.isArray(parsed))return;localStorage.setItem(storageKey,JSON.stringify(parsed.map(Number).filter(Number.isFinite)));localStorage.removeItem(legacyStorageKey)}catch(_){}};
+  const formatPrice=property=>window.Tabanji?.formatPropertyPrice?.(property)||`$${Number(property.price).toLocaleString('en-US')}${property.pricePeriod?` / ${property.pricePeriod}`:''}`;
+  const createPropertyCard=(property,favorites)=>{const arabic=window.TabanjiI18n?.language==='ar',title=arabic?property.titleAr:property.title,location=arabic?property.locationAr:property.location,active=favorites.includes(Number(property.id)),holder=document.createElement('div');holder.innerHTML=`<article class="property-card" data-property-id="${escapeHTML(property.id)}"><a class="property-media" href="property.html?id=${encodeURIComponent(property.id)}" aria-label="View ${escapeHTML(title)}"><img src="${escapeHTML(property.mainImage)}" alt="${escapeHTML(title)}" loading="lazy"><span class="badge">${escapeHTML(property.exclusive?'Exclusive':property.featured?'Featured':property.status)}</span><span class="button card-view">View Property</span></a><button class="favorite-button${active?' active':''}" type="button" aria-label="${active?'Remove from':'Add to'} favorites" aria-pressed="${active}"><i data-lucide="heart"></i></button><div class="property-info"><h3>${escapeHTML(title)}</h3><p class="property-location">${escapeHTML(location)}</p><p class="property-price">${escapeHTML(formatPrice(property))}</p><div class="property-meta">${property.bedrooms?`<span><i data-lucide="bed-double"></i>${escapeHTML(property.bedrooms)} Beds</span>`:''}${property.bathrooms?`<span><i data-lucide="bath"></i>${escapeHTML(property.bathrooms)} Baths</span>`:''}<span><i data-lucide="maximize"></i>${escapeHTML(property.area)} m²</span></div></div></article>`;return holder.firstElementChild};
+  function renderFeaturedProperties(){const grid=document.querySelector('#property-grid');if(!grid)return 0;const allProperties=Array.isArray(window.TABANJI_PROPERTIES)?window.TABANJI_PROPERTIES:[],selected=allProperties.filter(property=>property&&(property.featured||property.exclusive)).slice(0,6);grid.replaceChildren();if(!selected.length){const empty=document.createElement('div');empty.className='property-empty';empty.setAttribute('role','status');empty.innerHTML='<p>Our private selection is temporarily unavailable.</p><a class="text-link" href="properties.html">Explore all properties</a>';grid.append(empty);grid.dataset.renderCount='0';return 0}const fragment=document.createDocumentFragment(),favorites=getFavorites();selected.forEach(property=>fragment.append(createPropertyCard(property,favorites)));grid.append(fragment);grid.dataset.renderCount=String(selected.length);if(window.lucide)window.lucide.createIcons();return selected.length}
+  migrateFavorites();renderFeaturedProperties();
+  const grid=document.querySelector('#property-grid');grid?.addEventListener('click',event=>{const button=event.target.closest('.favorite-button');if(!button)return;const id=Number(button.closest('.property-card')?.dataset.propertyId);if(!Number.isFinite(id))return;const favorites=getFavorites(),saved=favorites.includes(id);saveFavorites(saved?favorites.filter(item=>item!==id):[...favorites,id]);renderFeaturedProperties();window.Tabanji?.updateFavoriteBadges();window.Tabanji?.showToast(saved?'Property removed from favorites.':'Property added to favorites.')});
+  const searchForm=document.getElementById('property-search');let searchMode='Buy';searchForm?.querySelectorAll('[data-mode]').forEach(button=>button.addEventListener('click',()=>{searchMode=button.dataset.mode||'Buy';searchForm.querySelectorAll('[data-mode]').forEach(item=>item.classList.toggle('active',item===button))}));searchForm?.addEventListener('submit',event=>{event.preventDefault();const query=new URLSearchParams({operation:searchMode.toLowerCase()});for(const [key,value] of new FormData(searchForm).entries())if(value)query.set(key,value);location.href=`properties.html?${query}`});
+  const moreFilters=document.querySelector('.more-filters'),mobileFilters=document.getElementById('mobile-filters');moreFilters?.addEventListener('click',()=>{if(!mobileFilters)return;const open=mobileFilters.classList.toggle('open');moreFilters.setAttribute('aria-expanded',String(open));const label=moreFilters.querySelector('span');if(label)label.textContent=open?'Fewer Filters':'More Filters'});
+  const setupReveal=()=>{const items=[...document.querySelectorAll('.reveal')];if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver'in window)){items.forEach(item=>item.classList.add('is-visible'));return}try{const observer=new IntersectionObserver((entries,instance)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');instance.unobserve(entry.target)}}),{threshold:.05,rootMargin:'0px 0px 40px'});items.forEach(item=>{if(item.getBoundingClientRect().top<innerHeight)item.classList.add('is-visible');else observer.observe(item)});document.documentElement.classList.add('js','reveal-ready')}catch(_){document.documentElement.classList.remove('reveal-ready');items.forEach(item=>item.classList.add('is-visible'))}};
+  setupReveal();addEventListener('load',()=>{if(window.lucide)window.lucide.createIcons()});addEventListener('storage',event=>{if(event.key===storageKey)renderFeaturedProperties()});document.addEventListener('tabanji:languagechange',renderFeaturedProperties);
 })();
